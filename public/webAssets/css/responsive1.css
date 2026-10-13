@@ -1,0 +1,234 @@
+@media(max-width:991px) {
+    .details-options .details-select {
+        width: 48%;
+    }
+}
+
+@media(max-width:767px) {
+
+    .container {
+        padding: 0 30px;
+    }
+
+    .small-align-left {
+        text-align: left !important;
+    }
+
+    .small-margin-b10 {
+        margin-bottom: 10px !important;
+    }
+
+    .inner-header.age-header {
+        margin: 30px 0 60px;
+    }
+
+    .header-title {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .steps {
+        font-size: 9px;
+        line-height: 11px;
+    }
+
+    .step-title {
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.24px;
+        margin: 0 0 15px 0;
+    }
+
+    .step-bar {
+        height: 10px;
+    }
+
+    .step-dot {
+        line-height: 0;
+    }
+
+    .step-dot img {
+        height: 10px;
+        width: 10px;
+    }
+
+    .details-options .details-select {
+        margin-bottom: 15px;
+        height: 60px;
+        width: 100%;
+    }
+
+    .details-options .details-select input[type="radio"] {
+        height: 60px;
+    }
+
+
+    .header-title {
+        margin-bottom: 25px;
+    }
+
+    .yes-no-btns a {
+        height: 115px;
+    }
+
+
+    .subscription-title {
+        margin: 15px 0;
+    }
+    
+    .subscription-main-img img,
+    .feedback-img img {
+        height: auto;
+        max-height: 100%;
+    }
+
+    .subscription-description {
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .cancel-description {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .subscription-cancel-description {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .subscription-title-block .subscription-cancel-description+.subscription-cancel-description {
+        margin: 20px 0 0;
+    }
+
+    .subscription-title-block .subscription-cancel-description:last-child {
+        margin-bottom: 40px;
+    }
+
+    .single-price-box {
+        padding: 25px 8px 16px;
+    }
+
+    .pricebox-title {
+        top: -15px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .price-box-duration {
+        font-size: 22px;
+        line-height: 24px;
+    }
+
+    .price-title {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .price {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    .price-duration {
+        font-size: 10px;
+        line-height: 16px;
+    }
+
+    .discount-tag {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .amount-save-detail {
+        font-size: 10px;
+        line-height: 16px;
+    }
+
+    .details-select.change-plan {
+        width: 100%;
+    }
+    .app-download-block{
+      padding: 30px;
+    }
+}
+
+@media(max-width:420px) {
+
+    .small-normal-input {
+        height: 80px !important;
+    }
+
+    .gain-muscle-img {
+        width: 100%;
+    }
+
+    .big-lable {
+        gap: 15px;
+    }
+.purchase-img img {
+    height: 220px;
+}
+}
+
+@media(max-width:400px) {
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .inner-header {
+        margin: 30px 0 50px;
+    }
+
+    .inner-header.age-header {
+        margin: 30px 0 50px;
+    }
+
+    .header-title {
+        font-size: 18px;
+        line-height: 18px;
+    }
+    
+    .back-btn {
+        font-size: 14px;
+        line-height: 14px;
+        top: 2px;
+        gap: 5px;
+    }
+
+    .back-btn img {
+        height: 14px;
+    }
+
+    .info-icon {
+        line-height: 0;
+        top: 2px;
+    }
+
+    .info-icon img {
+        height: 16px;
+        width: 16px;
+    }
+
+    .discount-tag {
+        left: 100%;
+    }
+
+    .subscription-title-block .subscription-cancel-description:last-child {
+        margin-bottom: 30px;
+    }
+
+    .bottom-btn .second-btn-link {
+        font-size: 16px;
+    }
+
+    .subscription-body {
+        padding-bottom: 15px;
+    }
+     .app-download-block {
+        padding: 15px;
+    }
+    
+}
+

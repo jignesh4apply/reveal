@@ -1,0 +1,77 @@
+=> Setting Steps Goal for the user while answering the Step Goal Question
+
+    If user select Less than 3000 then user will be assigned Steps Goal as 5000
+    If user select 3000-5000 then user will be assigned Steps Goal as 7500
+    If user select 5000-8000 then user will be assigned Steps Goal as 10000
+    If user select 8000-10000+ then user will be assigned Steps Goal as 12500
+
+=> Assigning Program from the Questions Answered by the User
+
+    First we do the sum total of the points from the answers answered by the question.
+            Now Suppose,
+            1.  If the total points of a user is less than or equals to 3
+                then we set the level of the user as Beginner
+            2.  If the total points of a user is greater than 3 but less than or equals to 6
+                then we set the level of the user as Professional
+            3.  If the total points of a user is greater than 6 but less than or equals to 9
+                then we set the level of the user as Expert
+    Then we get those programs by using the answers of the user from program related questions.
+    Then we select one program from the list whose level is nearest from the selected program.
+
+=> Calculation of Calorie a user should have to eaten in a single day.
+
+    First we calculate BMR
+    To Calculate BMR For Female
+        BMR = (10 * User_Weight) + (6.25 * User_Height) - (5 * User_Age) - 161
+    To Calculate BMR For Female
+        BMR = (10 * User_Weight) + (6.25 * User_Height) - (5 * User_Age) + 5
+
+    Then we choose one Activity Level for the user which is based on the Steps Goal
+        If a user Steps Goal is set to 0 to 3000 then the Activity Level of the user will be Sedentary and its activity factor is used as 0.9
+        If a user Steps Goal is set to greater than 3000 but less than or equals to 5000 then the Activity Level of the user will be Lightly Active and its activity factor is used as 0.9
+        If a user Steps Goal is set to greater than 5000 but less than or equals to 8000 then the Activity Level of the user will be Moderately Active and its activity factor is used as 0.8
+        If a user Steps Goal is set to greater than 8000 then the Activity Level of the user will be Active and its activity factor is used as 0.8
+
+        Activity Level          =>          Activity Factor
+        Sedentary               =>          0.9
+        Llightly Active         =>          0.9
+        Moderately Active       =>          0.8
+        Active                  =>          0.8
+
+    Then we calculate TDEE
+    To Calculate TDEE we use BMR and Activity Factor of the Activity Level
+
+    TDEE = BMR * Activity Factor
+
+    Then the target calorie for the user would we the TDEE.
+
+=> Calculation of calorie eaten by logging food into the Meal Type
+
+    Wheneve a user log a food into a meal type the user provide the portion(quantity) of the food in the gram.
+    Then we convert the portion(quantity) from gram to calorie by using below given step
+
+        Kcal = (portion(quantity) * 153) / 100
+
+    *Note : Same process for every meal type
+
+=> Caculation of Macro
+
+    First we calculate Traget Macro by using Target Calorie which we have calculate before using BMR and TDEE
+    Step for calulating Traget Macro given below
+
+        For Carbs
+            Target Carbs = (Target Calorie * 40) / 100
+        Now convert the Target Carbs into Gram 
+            Target Carbs in Gram = (Target Carbs / 4)
+
+        For Proteins
+            Target Proteins = (Target Calorie * 40) / 100
+        Now convert the Target Proteins into Gram 
+            Target Proteins in Gram = (Target Proteins / 4)
+
+        For Fats
+            Target Fats = (Target Calorie * 40) / 100
+        Now convert the Target Fats into Gram 
+            Target Fats in Gram = (Target Fats / 4)
+
+Note : Please consider all the values after calculation as round of

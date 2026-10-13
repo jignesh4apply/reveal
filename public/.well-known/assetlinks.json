@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "apply.revealclub",
+    "sha256_cert_fingerprints":
+    ["FB:BC:1C:2E:29:BC:B9:88:74:7C:AD:70:30:74:91:BF:7E:8D:F0:3E:AB:9F:DB:4A:85:96:6A:10:3F:A3:8A:DA"]
+  }
+}]

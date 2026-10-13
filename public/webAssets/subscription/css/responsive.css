@@ -1,0 +1,287 @@
+/* @media (max-width:767px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .tips-box {
+        max-width: 100%;
+        padding: 30px;
+    }
+
+    .main-btn .main-btn-text {
+        height: 60px;
+        max-width: 100%;
+    }
+
+    .going-soon-img,
+    .feedback-input,
+    .alert-message,
+    .membership-box,
+    .keep-subscription-text.style-2,
+    .motivation,
+    .plan-description-block,
+    .guide-block,
+    .membership-perks-list.style-2,
+    .plan-overview-block {
+        max-width: 100%;
+    }
+
+    .motivation {
+        margin-top: 10px;
+    }
+
+    .membership-perks-list.style-2 {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width:575px) {
+
+    .sm-text-align-left {
+        text-align: left !important;
+    }
+
+    .question-block {
+        margin-top: 30px;
+    }
+
+    .question-options {
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .question-options .question-select {
+        margin-bottom: 0;
+        height: 60px;
+        width: 100%;
+    }
+
+    .plan-description-block .plan-description-item .plan-description {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+}
+
+@media (max-width:479px) {
+
+    .second-btn .second-btn-text {
+        font-size: 16px;
+    }
+
+    .inner-header {
+        height: 62px;
+    }
+
+    .subscription-body {
+        min-height: calc(100vh - 62px);
+    }
+
+    .tips-box {
+        padding: 20px;
+    }
+
+    .tips-box .tips-description {
+        font-size: 15px;
+        line-height: 21px;
+    }
+
+    .tips-box .tip .tips-text {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    .subscription-footer .keep-subscription-text {
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .alert-message .alert-message-text {
+        font-size: 12px;
+        line-height: 19px;
+    }
+
+    .price-box-block {
+        gap: 10px;
+    }
+
+    .price-box-block .single-price-box {
+        padding: 25px 5px 15px 5px;
+    }
+
+    .direction-block {
+        top: 15%;
+    }
+
+    .single-price-box .yearly-price {
+        font-size: 10px;
+        line-height: 16px;
+    }
+
+    .membership-box {
+        padding: 20px 15px;
+        margin-top: 20px;
+    }
+
+    .membership-perks-list .membership-perk {
+        gap: 5px;
+    }
+
+    .membership-perks-list .membership-perk .perk-text {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .membership-perks-list .membership-perk .perk-text::before {
+        height: 20px;
+        left: 0px;
+    }
+
+    .keep-subscription-text.style-2 {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .subscription-footer .main-btn + .main-btn {
+        margin-top: 5px;
+    }
+
+    .motivation .message-box {
+        padding: 10px;
+    }
+
+    .subscription-title .subscription-description + .subscription-description {
+        margin-top: 15px;
+    }
+
+    .guide-block {
+        padding: 25px;
+    }
+
+    .guide-block .guidebook-img {
+        margin-top: -70px;
+    }
+
+    .membership-perks-list.style-2 {
+        padding: 0 20px;
+    }
+
+    .plan-description-block.style-2 {
+        padding: 20px;
+    }
+
+    .plan-description-block .plan-description-list .plan-description-item {
+        gap: 10px;
+    }
+
+    .sm-margin-top-15 {
+        margin-top: 15px !important;
+    }
+
+    .sm-margin-top-30 {
+        margin-top: 30px !important;
+    }
+
+    .plan-overview-block {
+        padding: 20px;
+    }
+
+    .plan-overview-block .overview-img {
+        margin-top: -65px;
+    }
+
+    .terms-block {
+        font-size: 12px;
+        line-height: 22px;
+    }
+
+    .terms-block .second-btn-text {
+        font-size: 12px;
+        line-height: 22px;
+    }
+}
+
+@media (max-width:400px) {
+
+    .subscription-reminder-2 {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+@media (max-width:370px) {
+
+    h2 {
+        font-size: 32px;
+    }
+
+    .main-btn-text.no-padding {
+        padding: 0 45px !important;
+    }
+
+    .sm-no-padding {
+        padding: 0 !important;
+    }
+
+    .second-btn .second-btn-text {
+        font-size: 16px;
+        line-height: 20px;
+        border-bottom: none;
+        text-decoration: underline;
+    }
+
+    .tips-box .tips-title {
+        margin: 15px 0 10px 0;
+    }
+
+    .main-btn .main-btn-text {
+        padding: 0 45px;
+    }
+
+    .single-price-box .price .discount {
+        font-size: 9px;
+        line-height: 14px;
+        padding: 2px;
+        left: 100%;
+    }
+
+    .single-price-box .price-box-sub-title {
+        top: -15px;
+        padding: 5px;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .membership-perks-list .membership-perk {
+        align-items: flex-start;
+    }
+
+    .membership-perks-list .membership-perk img {
+        margin-top: 4px;
+    }
+
+    .second-btn-text.no-border {
+        text-decoration: none;
+    }
+
+    .alert-message.style-2 {
+        gap: 10px;
+    }
+
+    .plan-description-block .plan-description-item .plan-icon-block::before {
+        height: 40px;
+    }
+
+    .plan-overview-block .overview-img {
+        margin-top: -55px;
+    }
+
+    .terms-block .second-btn-text {
+        font-size: 12px;
+        line-height: 22px;
+    }
+
+    .going-soon-img {
+        padding: 0;
+    }
+} */
