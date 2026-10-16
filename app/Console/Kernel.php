@@ -23,6 +23,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('subscription:remind')->daily();
         $schedule->command('subscription:cancellation-windows')->daily();
         $schedule->command('app:send-behavior-test-notifications')->daily();
+        // Google Play external offers (Android): retry reports, alert before the 24h limit
+        $schedule->command('google-play:report-external-transactions')->everyFiveMinutes()->withoutOverlapping();
         // $schedule->command('app:send-push-notification')->dailyAt('12:00');
         // $schedule->command('app:send-push-notification')->dailyAt('18:00');
     }

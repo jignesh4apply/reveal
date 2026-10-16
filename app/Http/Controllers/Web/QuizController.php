@@ -45,6 +45,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use App\Services\GooglePlay\ExternalOfferLink;
 
 class QuizController extends Controller
 {
@@ -82,6 +83,8 @@ class QuizController extends Controller
             return view('front.quiz.blank');
         }
         $data = $request->all();
+        // Google Play external offer token from the Android app (?ext_token=...)
+        ExternalOfferLink::captureFromRequest($request, 'quiz');
         $previousQuesId = $request->input('quesId');
         if (!session()->get('quiz_started')) {
             if (isset($data['isWebView']) && $data['isWebView'] == 1) {
@@ -1739,7 +1742,7 @@ class QuizController extends Controller
 
                     // Log subscription creation
                     Log::info('Creating Stripe subscription', ['user_id' => $user->id, 'plan_id' => $plan->id]);
-                    $subscription = $this->createStripeSubscription($stripe, $stripeCustomer->id, $plan->id, $isTrial, $trialDays, $couponId);
+                    $subscription = $this->createStripeSubscription($stripe, $stripeCustomer->id, $plan->id, $isTrial, $trialDays, $couponId, $user->id);
                     if ($subscription->latest_invoice) {
                         $latestInvoice = $stripe->invoices->retrieve($subscription->latest_invoice, ['expand' => ['payment_intent']]);
                         $paymentIntent = $latestInvoice->payment_intent ?? null;
@@ -1912,7 +1915,7 @@ class QuizController extends Controller
         ]);
     }
 
-    private function createStripeSubscription($stripe, $customerId, $planId, $isTrial, $trialDays = null, $couponId = null)
+    private function createStripeSubscription($stripe, $customerId, $planId, $isTrial, $trialDays = null, $couponId = null, $userId = null)
     {
         $subscriptionParams = [
             "customer" => $customerId,
@@ -1926,6 +1929,11 @@ class QuizController extends Controller
         // Add coupon if provided
         if ($couponId) {
             $subscriptionParams['coupon'] = $couponId;
+        }
+        // Link to the Google Play external offer token (Android), if the user came from the app link
+        $externalOfferMetadata = ExternalOfferLink::subscriptionMetadata($userId);
+        if (!empty($externalOfferMetadata)) {
+            $subscriptionParams['metadata'] = $externalOfferMetadata;
         }
 
         return $stripe->subscriptions->create($subscriptionParams);
@@ -2872,11 +2880,11 @@ class QuizController extends Controller
                     'save_default_payment_method' => 'on_subscription', // ← Auto-saves PM
                 ],
                 'expand' => ['latest_invoice.payment_intent'],
-                'metadata' => [
+                'metadata' => array_merge([
                     'user_id' => $user->id,
                     'plan_id' => $plan->id,
                     'payment_method' => 'klarna'
-                ],
+                ], ExternalOfferLink::subscriptionMetadata()), // Google Play external offer (Android)
             ];
 
             // Add trial if applicable

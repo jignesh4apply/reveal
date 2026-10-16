@@ -17,6 +17,7 @@ use App\Models\UsersInitialMeasurement;
 use App\Models\UsersSubscriptions;
 use App\Models\UsersTargetMeasurement;
 use App\Services\CustomerIoService;
+use App\Services\GooglePlay\ExternalOfferReporter;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -50,6 +51,13 @@ class StripeWebhookController extends Controller
         switch ($event->type) {
             case 'invoice.payment_succeeded':
                 $this->handleInvoicePaymentSucceeded($eventData);
+                // Google Play external offers (Android): report this payment (initial or renewal) if linked
+                $this->reportToGooglePlay(fn (ExternalOfferReporter $r) => $r->recordPaidInvoice($eventData), $event->type);
+                break;
+            case 'invoice.paid':
+                // Also covers 0 EUR invoices (free trial start). Safe to receive with invoice.payment_succeeded:
+                // each invoice is recorded only once.
+                $this->reportToGooglePlay(fn (ExternalOfferReporter $r) => $r->recordPaidInvoice($eventData), $event->type);
                 break;
             case 'customer.subscription.updated':
                 $this->handleSubscriptionUpdated($eventData);
@@ -61,12 +69,34 @@ class StripeWebhookController extends Controller
             case 'charge.refunded':
                 Log::info('Inside the event of refund: ' . $event->type);
                 $this->handleSubscriptionAmountRefunded($eventData);
+                // Google Play external offers (Android): report refunds of reported payments
+                $this->reportToGooglePlay(fn (ExternalOfferReporter $r) => $r->recordRefunds($eventData), $event->type);
                 break;
             default:
                 Log::info('Received unhandled webhook event type: ' . $event->type);
         }
 
         return response()->json(['status' => 'success'], 200);
+    }
+
+    /**
+     * Google Play external offers (Android). Never lets a reporting error break the existing webhook flow;
+     * failed reports are retried by the google-play:report-external-transactions command.
+     */
+    private function reportToGooglePlay(callable $callback, string $eventType): void
+    {
+        // Runs after the response has been sent to Stripe, so slow Stripe/Google calls never delay
+        // the webhook answer (and the existing handler above has already saved UsersSubscriptions).
+        app()->terminating(function () use ($callback, $eventType) {
+            try {
+                $callback(app(ExternalOfferReporter::class));
+            } catch (\Throwable $e) {
+                Log::error('Google external offer: webhook recording failed', [
+                    'event' => $eventType,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        });
     }
 
     protected function handleInvoicePaymentSucceeded($invoice)

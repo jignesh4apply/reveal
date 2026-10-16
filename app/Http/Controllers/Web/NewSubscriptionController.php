@@ -16,11 +16,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Services\GooglePlay\ExternalOfferLink;
 
 class NewSubscriptionController extends Controller
 {
     public function packages(Request $request)
     {
+        // Google Play external offer token from the Android app (?ext_token=...)
+        ExternalOfferLink::captureFromRequest($request, 'packages');
         $getPackages = Plan::where('status', 1)->get();
         $user = Auth::guard('user')->user();
         if($user){
@@ -186,7 +189,8 @@ class NewSubscriptionController extends Controller
                         $plan->id,
                         $isTrial,
                         $trialDays,
-                        $couponId
+                        $couponId,
+                        $user->id
                     );
 
                     $latestInvoice = $stripe->invoices->retrieve($subscription->latest_invoice, ['expand' => ['payment_intent']]);
@@ -351,11 +355,11 @@ class NewSubscriptionController extends Controller
                     'save_default_payment_method' => 'on_subscription', // ← Auto-saves PM
                 ],
                 'expand' => ['latest_invoice.payment_intent'],
-                'metadata' => [
+                'metadata' => array_merge([
                     'user_id' => $user->id,
                     'plan_id' => $plan->id,
                     'payment_method' => 'klarna'
-                ],
+                ], ExternalOfferLink::subscriptionMetadata()), // Google Play external offer (Android)
             ];
 
             // Add trial if applicable
@@ -485,7 +489,7 @@ class NewSubscriptionController extends Controller
         ]);
     }
 
-    private function createStripeSubscription($stripe, $customerId, $planId, $isTrial, $trialDays = null, $couponId = null)
+    private function createStripeSubscription($stripe, $customerId, $planId, $isTrial, $trialDays = null, $couponId = null, $userId = null)
     {
         try {
             $params = [
@@ -500,6 +504,11 @@ class NewSubscriptionController extends Controller
             // Add coupon if provided
             if ($couponId) {
                 $params['coupon'] = $couponId;
+            }
+            // Link to the Google Play external offer token (Android), if the user came from the app link
+            $externalOfferMetadata = ExternalOfferLink::subscriptionMetadata($userId);
+            if (!empty($externalOfferMetadata)) {
+                $params['metadata'] = $externalOfferMetadata;
             }
 
             // Log params for debugging

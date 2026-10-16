@@ -18,11 +18,14 @@ use Illuminate\Support\Facades\Auth;
 use Stripe\Customer;
 use Stripe\PaymentMethod;
 use Stripe\Stripe;
+use App\Services\GooglePlay\ExternalOfferLink;
 
 class UnsubscriptionController extends Controller
 {
     public function subscriptionDetails(Request $request)
     {
+        // Google Play external offer token from the Android app's Manage button (?ext_token=...)
+        ExternalOfferLink::captureFromRequest($request, 'subscription_details');
         $ValidUser = null;
         $data = $request->all();
         if(isset($data['uid']) && isset($data['st'])){
@@ -749,11 +752,13 @@ class UnsubscriptionController extends Controller
                 ],
                 'trial_end' => $currentSubscriptionEndDate, // Set the trial_end to the current subscription's end date
                 'proration_behavior' => 'none',  // Prevent proration charges
-                'metadata' => [
+                'metadata' => array_merge([
                     'user_id' => $userId,
                     'plan_id' => $newPlan->id,
                     'payment_method' => $paymentMethodType
-                ],
+                ], $newPlan->id != $subscription->plan_id
+                    ? ExternalOfferLink::planChangeMetadata()
+                    : [ExternalOfferLink::META_CHANGE_OFFER_REF => '']), // Google Play external offer (Android): a plan change is a new purchase for Google; '' removes a stale change
             ]);
 
             // Update the local subscription data with the new plan details
